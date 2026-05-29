@@ -799,7 +799,7 @@ namespace Content.Shared.Preferences
                 flavortext = FormattedMessage.RemoveMarkupOrThrow(FlavorText);
             }
 
-            var appearance = HumanoidCharacterAppearance.EnsureValid(Appearance, Species, Sex, sponsorPrototypes);
+            var appearance = HumanoidCharacterAppearance.EnsureValid(Appearance, Species, Sex);
             var oocText = OocText.Length > MaxDescLength ? FormattedMessage.RemoveMarkup(OocText)[..MaxDescLength] : FormattedMessage.RemoveMarkup(OocText); // WL-OOCText
 
             // WL-Records-Start
@@ -1176,8 +1176,7 @@ namespace Content.Shared.Preferences
             {
                 var sponsorsManager = IoCManager.Resolve<ISharedSponsorsManager>();
                 sponsorPrototypes = sponsorsManager.TryGetServerPrototypes(session.UserId, out var prototypes)
-                    ? prototypes.ToArray()
-                    : Array.Empty<string>();
+                    ? prototypes.ToArray() : Array.Empty<string>();
             }
             catch (Exception)
             {

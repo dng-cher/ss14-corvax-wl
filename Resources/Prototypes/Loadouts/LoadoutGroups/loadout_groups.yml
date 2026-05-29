@@ -156,6 +156,7 @@
   - CaptainBackpack
   - CaptainSatchel
   - CaptainDuffel
+  - LeatherSatchel # WL-Changes
 
 - type: loadoutGroup
   id: CaptainOuterClothing
@@ -216,6 +217,7 @@
   - HoPDuffelbag
   # WL-HoP-Personalization-End
   - HoPBackpackIan
+  - LeatherSatchel # WL-Changes
 
 - type: loadoutGroup
   id: HoPOuterClothing
@@ -361,6 +363,7 @@
   - CommonBackpack
   - CommonSatchel
   - CommonDuffel
+  - LeatherSatchel # WL-Changes
 
 - type: loadoutGroup
   id: PassengerNeck
@@ -1136,6 +1139,7 @@
   - BotanistBackpack
   - BotanistSatchel
   - BotanistDuffel
+  - LeatherSatchel # WL-Changes
 
 - type: loadoutGroup
   id: BotanistOuterClothing
@@ -1158,6 +1162,7 @@
   loadouts:
   - JesterHat
   - JesterAltHat
+  - ClownMitre
 
 - type: loadoutGroup
   id: ClownJumpsuit
@@ -1274,6 +1279,7 @@
   - ClownBackpack
   - ClownSatchel
   - ClownDuffel
+  - LeatherSatchel # WL-Changes
 
 - type: loadoutGroup
   id: ClownOuterClothing
@@ -1437,6 +1443,7 @@
   - MimeBackpack
   - MimeSatchel
   - MimeDuffel
+  - LeatherSatchel # WL-Changes
 
 - type: loadoutGroup
   id: MimeOuterClothing
@@ -1790,6 +1797,7 @@
   - CargoTechnicianBackpack
   - CargoTechnicianSatchel
   - CargoTechnicianDuffel
+  - LeatherSatchel # WL-Changes
 
 - type: loadoutGroup
   id: CargoTechnicianOuterClothing
@@ -1825,6 +1833,7 @@
   - SalvageSpecialistBackpack
   - SalvageSpecialistSatchel
   - SalvageSpecialistDuffel
+  - LeatherSatchel # WL-Changes
 
 - type: loadoutGroup
   id: SalvageSpecialistOuterClothing
@@ -2138,6 +2147,7 @@
   - StationEngineerBackpack
   - StationEngineerSatchel
   - StationEngineerDuffel
+  - LeatherSatchel # WL-Changes
 
 - type: loadoutGroup
   id: StationEngineerOuterClothing
@@ -2290,6 +2300,7 @@
   - AtmosphericTechnicianBackpack
   - AtmosphericTechnicianSatchel
   - AtmosphericTechnicianDuffel
+  - LeatherSatchel # WL-Changes
 
 - type: loadoutGroup
   id: AtmosphericTechnicianShoes
@@ -2495,6 +2506,7 @@
   - ScientistBackpack
   - ScientistSatchel
   - ScientistDuffel
+  - LeatherSatchel # WL-Changes
 
 - type: loadoutGroup
   id: ScientistOuterClothing
@@ -2771,6 +2783,7 @@
   - SecurityBackpack
   - SecuritySatchel
   - SecurityDuffel
+  - LeatherSatchel # WL-Changes
 
 - type: loadoutGroup
   id: SecurityBelt
@@ -2786,6 +2799,7 @@
   - ArmorVestSec # Corvax
   - ArmorVest
   # - ArmorVestSlim # WL-Changes-RemovingSlimArmorFromSec
+  - SecurityOfficerOvercoat # Corvax
   - SecurityOfficerWintercoat
 
 - type: loadoutGroup
@@ -2849,6 +2863,7 @@
   - DetectiveArmorVest
   - DetectiveCoat
   - DetectiveCoatGrey
+  - SecurityOfficerWintercoat
 
 - type: loadoutGroup
   id: DetectiveJobTrinkets

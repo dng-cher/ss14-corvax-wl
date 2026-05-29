@@ -8,10 +8,10 @@ using Robust.Shared.Utility;
 
 namespace Content.Server._WL.DynamicText;
 
-public sealed class DynamicTextSystem : EntitySystem
+public sealed partial class DynamicTextSystem : EntitySystem
 {
-    [Dependency] private readonly IEntityManager _ent = default!;
-    [Dependency] private readonly IConfigurationManager _cfm = default!;
+    [Dependency] private IEntityManager _ent = default!;
+    [Dependency] private IConfigurationManager _cfm = default!;
 
     public override void Initialize()
     {
@@ -54,11 +54,10 @@ public sealed class DynamicTextSystem : EntitySystem
 
     private void OnExamine(EntityUid uid, CharacterInformationComponent comp, ExaminedEvent args)
     {
-
         using (args.PushGroup(nameof(CharacterInformationComponent)))
         {
             if (!string.IsNullOrEmpty(comp.DynamicText))
-                args.PushMarkup(comp.DynamicText);
+                args.PushMarkup("[color=#B5C7EB][bold]" + comp.DynamicText + "[/bold][/color]");
         }
     }
 }

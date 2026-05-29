@@ -1,9 +1,7 @@
 using Content.Server.Actions;
 using Content.Server.DoAfter;
 using Content.Server.Popups;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Server.Speech.Components;
 using Content.Server.StationEvents.Components;
 using Content.Shared._WL.Android;
 using Content.Shared._WL.Light.Events;
@@ -12,16 +10,15 @@ using Content.Shared.Body;
 using Content.Shared.DoAfter;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Humanoid;
-using Content.Shared.Humanoid.Markings;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
-using Content.Shared.Mobs;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Power.Components;
 using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.StatusEffectNew;
+using Content.Shared.Speech.Components;
 using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
 using Robust.Server.Audio;
@@ -30,32 +27,31 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using System;
 
 namespace Content.Server._WL.Android
 {
     public sealed partial class AndroidSystem : EntitySystem
     {
-        [Dependency] private readonly BatterySystem _battery = default!;
-        [Dependency] private readonly PowerCellSystem _powerCell = default!;
-        [Dependency] private readonly DoAfterSystem _doAfter = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly StatusEffectsSystem _statusEffect = default!;
-        [Dependency] private readonly MovementSpeedModifierSystem _move = default!;
-        [Dependency] private readonly PopupSystem _popup = default!;
-        [Dependency] private readonly PointLightSystem _pointLight = default!;
-        [Dependency] private readonly ItemToggleSystem _toggle = default!;
-        [Dependency] private readonly AudioSystem _audio = default!;
-        [Dependency] private readonly ActionsSystem _actions = default!;
-        [Dependency] private readonly ContainerSystem _container = default!;
-        [Dependency] private readonly AppearanceSystem _appearance = default!;
-        [Dependency] private readonly SharedVisualBodySystem _visualBody = default!;
+        [Dependency] private BatterySystem _battery = default!;
+        [Dependency] private PowerCellSystem _powerCell = default!;
+        [Dependency] private DoAfterSystem _doAfter = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private IRobustRandom _random = default!;
+        [Dependency] private StatusEffectsSystem _statusEffect = default!;
+        [Dependency] private MovementSpeedModifierSystem _move = default!;
+        [Dependency] private PopupSystem _popup = default!;
+        [Dependency] private PointLightSystem _pointLight = default!;
+        [Dependency] private ItemToggleSystem _toggle = default!;
+        [Dependency] private AudioSystem _audio = default!;
+        [Dependency] private ActionsSystem _actions = default!;
+        [Dependency] private ContainerSystem _container = default!;
+        [Dependency] private AppearanceSystem _appearance = default!;
+        [Dependency] private SharedVisualBodySystem _visualBody = default!;
 
         [ViewVariables(VVAccess.ReadOnly)]
         private const float AndroidDoAfterChargeTime = 1f;
 
-       public override void Initialize()
+        public override void Initialize()
         {
             base.Initialize();
 
@@ -111,7 +107,7 @@ namespace Content.Server._WL.Android
             UpdateLight(uid, component);
         }
 
-        //region Light
+        #region Light
         private void OnToggleLightAction(EntityUid uid, AndroidComponent component, ToggleActionEvent args)
         {
             if (args.Handled || args.Action != component.ToggleLightActionEntity)
@@ -123,12 +119,12 @@ namespace Content.Server._WL.Android
             args.Handled = true;
         }
 
-        public void UpdateLight(EntityUid uid, AndroidComponent component, bool? enabled = null)
+        private void UpdateLight(EntityUid uid, AndroidComponent component, bool? enabled = null)
         {
             if (!component.LightEntity.HasValue)
                 return;
 
-            EntityUid lightEntity = component.LightEntity.Value;
+            var lightEntity = component.LightEntity.Value;
 
             if (enabled != null)
             {
@@ -140,27 +136,24 @@ namespace Content.Server._WL.Android
 
             _pointLight.SetEnergy(lightEntity, _toggle.IsActivated(uid) ? component.LightBaseRadius : component.LightBaseRadius / 3f);
 
-            if (!TryComp<HumanoidProfileComponent>(uid, out var humanoid))
+            if (!HasComp<HumanoidProfileComponent>(uid))
                 return;
 
             if (!_visualBody.TryGatherMarkingsData(uid,
                 [HumanoidVisualLayers.Overlay],
-                out _,
+                out var organData,
                 out _,
                 out var applied)
                     || applied.Count == 0)
                 return;
 
-            if (!applied.TryGetValue("Torso", out var markingsSet))
+            if (!organData.TryGetValue("Eyes", out var marking))
                 return;
 
-            if (!markingsSet.TryGetValue(HumanoidVisualLayers.Overlay, out var markings))
-                return;
-
-            Color ledColor = markings[0].MarkingColors[0].WithAlpha(255);
+            var ledColor = marking.EyeColor.WithAlpha(255);
             _pointLight.SetColor(lightEntity, ledColor);
         }
-        //endregion Light
+        #endregion Light
 
         private void OnModifiersRefresh(EntityUid android, AndroidComponent comp, RefreshMovementSpeedModifiersEvent args)
         {
@@ -182,7 +175,7 @@ namespace Content.Server._WL.Android
                 androidComp.IsUnderIonStorm = true;
                 _move.RefreshMovementSpeedModifiers(android, movementSpeedComp);
 
-                _popup.PopupEntity(androidComp.IonStormPopupMessage, android, android, Shared.Popups.PopupType.Medium);
+                _popup.PopupEntity(Loc.GetString(androidComp.IonStormPopupMessage), android, android, Shared.Popups.PopupType.Medium);
 
                 EnsureComp<StutteringAccentComponent>(android);
             }
@@ -260,7 +253,7 @@ namespace Content.Server._WL.Android
             {
                 Act = () => _doAfter.TryStartDoAfter(doAfter),
                 IconEntity = GetNetEntity(target),
-                Text = "Зарядка"
+                Text = Loc.GetString("android-system-charge-verb")
             });
         }
 

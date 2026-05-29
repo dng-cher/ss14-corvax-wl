@@ -1,5 +1,4 @@
 using Robust.Shared.Audio;
-using Robust.Shared.Serialization;
 
 namespace Content.Server._WL.Android
 {
@@ -31,7 +30,7 @@ namespace Content.Server._WL.Android
         public float IonStormSlownessProbability = 0.78f;
 
         [DataField]
-        public string IonStormPopupMessage = "Вы чувствуете из-за электромагнитных колебаний ваше тело становится тяжелее, а мысли запутаннее";
+        public LocId IonStormPopupMessage = "android-comp-ion-storm-popup";
 
         [DataField]
         public bool IsUnderIonStorm = false;
@@ -40,15 +39,19 @@ namespace Content.Server._WL.Android
 
         [DataField]
         public SoundSpecifier ToggleLightSound = new SoundPathSpecifier("/Audio/Machines/button.ogg");
+
         [DataField("lightPrototype")]
         public String LightEntityPrototype = "AndroidLightMarker";
+
         [DataField]
         public string TogglelLightAction = "ActionToggleAndroidLight";
+
         [DataField]
         public float LightBaseRadius = 3.5f;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public EntityUid? LightEntity;
+
         [ViewVariables(VVAccess.ReadWrite)]
         public EntityUid? ToggleLightActionEntity;
     }

@@ -11,12 +11,14 @@
   - Male: корреспондент
   - Male: телеведущий
   - Male: радиоведущий
+  - Male: социолог # SOP-Playtest
   startingGear: ReporterGear
   icon: "JobIconReporter"
   supervisors: job-supervisors-hop
   access:
   - Service
   - Maintenance
+  - Reporter # WL-Reporter-changes
   # WL-Skills-start
   bonusSkillPoints: 23
   defaultSkills:
